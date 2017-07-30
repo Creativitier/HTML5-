@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <audio
+    src="./4941600.m4a"
+    id="a1"
+    controls>
+    </audio>
+    <script>
+       var a1 = document.getElementById('a1')
+       //1.
+//       setInterval(function(){
+//           //从零开始到现在所用的时间,此属性可以被设置
+//           console.log(a1.currentTime)
+//       })
+        //2.设置音量
+        a1.volume = 0.5
+        //3.是否静音
+        console.log(a1.muted)
+        //4.
+//        a1.play()
+//        a1.pause()
+       //5.重新加载媒体
+        a1.load()
+
+        //6.结束时候触发
+        a1.end()
+        //7.播放预览页面
+//        poster
+    </script>
+</body>
+</html>

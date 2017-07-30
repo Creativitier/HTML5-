@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #fileWrapper {
+            transition: all 0.5s ease;
+        }
+        #fileWrapper: hover {
+            opacity: 1!important;
+        }
+        #visualizer_wrapper {
+            text-align: center;
+
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div id="fileWrapper" class="file_wrapper">
+        <div id="info">
+            HTML5 Audio API showcase | An Audio Viusalizer
+        </div>
+        <label for="uploadedFile">Drag&drop or select a file to play:</label>
+        <input type="file" id="uploadedFile"></input>
+    </div>
+    <div id="visualizer_wrapper">
+        <canvas id='canvas' width="800" height="350"></canvas>
+    </div>
+</div>
+<script>
+    function loadSound(url) {
+        var request = new XMLHttpRequest(); //建立一个请求
+        request.open('GET', url, true); //配置好请求类型，文件路径等
+        request.responseType = 'arraybuffer'; //配置数据返回类型
+        // 一旦获取完成，对音频进行进一步操作，比如解码
+        request.onload = function() {
+            var arraybuffer = request.response;
+        }
+        request.send();
+    }
+</script>
+<script>
+       var Visualizer = function() {
+           this.file = null//处理的文件
+           this.fileName = null//要处理的文件名
+           this.audioContext = null//执行上下文
+           this.source = null//保存音频
+       }
+       Visualizer.prototype = {
+           _prepareAPI: function() {
+               try{
+                   this.audioContext = new window.AudioContext()
+               } catch(e) {
+                   console.log('!妳的浏览器不支持AudioContext');
+                   console.log('error:' + e)
+               }
+           },
+           _addEventListener: function() {
+               let that = this
+               audioInput = document.getElementById('uploadedFile')
+               dropContainer = document.getElementsByTagName("canvas")[0]
+               audioInput.onchange = function() {
+                   if(this.files.length !== 0) {
+                       that.file = audioInput.files[0]//打印(that.file)
+                       that.file = that.file.name
+                       that._start()////获取到文件后，开始程序
+                   }
+               }
+           },
+           _start: function(){
+               let that = this,
+                   file = this.file,
+                   fr = new FileReader();//实例化一个FileReader用于读取文件
+               fr.onload = function(e) {
+                  let fileResult = e.target.result;//ArrayBuffer数据
+                  let audioContext = that.audioContext
+                  audioContext.decodeAudioData(fileResult, function(buffer) {
+                      that._visualize(audioContext, buffer);
+                  }, function(e) {
+                      console.log('error:' +  e)
+                  })
+                   //将上一步获取的文件传递给FileReader从而将其读取为ArrayBuffer格式
+                  fr.readAsArrayBuffer(file)
+               }
+           },
+           _visualize: function(audioContext, buffer) {
+               let audioBufferSouceNode = audioContext.createBufferSource(),
+               analyser = audioContext.createAnalyser();
+               audioBufferSouceNode.connect(analyser);
+               analyser.connect(audioContext.destination);
+               audioBufferSouceNode.buffer = buffer;
+               audioBufferSouceNode.start(0);
+               this._drawSpectrum(analyser);
+           },
+           _drawSpectrum: function(analyser) {
+               var array = new Uint8Array(analyser.frequencyBinCount);
+               analyser.getByteFrequencyData(array);
+
+           }
+       }
+       dropContainer.addEventListener("dragenter", function() {
+           that._updateInfo('Drop it on the page', true);
+       }, false);
+       dropContainer.addEventListener("dragover", function(e) {
+           e.stopPropagation();
+           e.preventDefault();
+           e.dataTransfer.dropEffect = 'copy'; //设置文件放置类型为拷贝
+       }, false);
+       dropContainer.addEventListener("dragleave", function() {
+           that._updateInfo(that.info, false);
+       }, false);
+       dropContainer.addEventListener("drop", function(e) {
+           e.stopPropagation();
+           e.preventDefault();
+           that.file = e.dataTransfer.files[0]; //获取文件并赋值到Visualizer对象
+           that.fileName = that.file.name;
+           that._start();
+       }, false);
+    </script>
+</body>
+</html>
