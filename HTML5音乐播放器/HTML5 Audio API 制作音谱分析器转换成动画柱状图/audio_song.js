@@ -69,6 +69,7 @@ Visualizer.prototype = {
 		  gradient.addColorStop(0.5, '#ff0');
 		  gradient.addColorStop(0, '#f00');
 		  ctx.fillStyle = gradient;
+		  var k=false;
 
 			var drawMeter = function() {
 			    var array = new Uint8Array(analyser.frequencyBinCount);
@@ -76,13 +77,18 @@ Visualizer.prototype = {
 			    var step = Math.round(array.length / meterNum); //计算采样步长(时间)
 			    ctx.clearRect(0, 0, cwidth, cheight); //清理画布准备画画
 			    for (var i = 0; i < meterNum; i++) {
+			    	if(!k) {
+			    	console.log(array)
+			    	console.log(array[i*step])
+                     k=true
+			    	}
 			        var value = array[i * step];
 			        if(capYPositionArray.length < Math.round(meterNum)) {
 			        	capYPositionArray.push(value)
 			        }
 			        ctx.fillStyle = capStyle
 			        if(value < capYPositionArray[i]) {
-			        	console.log(capYPositionArray[i],--capYPositionArray[i])
+			        	
 			         ctx.fillRect(i * 12 , cheight - (--capYPositionArray[i]) + capHeight, meterWidth, capHeight);
 			        } else {
 			         ctx.fillRect(i * 12 , cheight - value + capHeight, meterWidth, capHeight);

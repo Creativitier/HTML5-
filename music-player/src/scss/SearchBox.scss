@@ -1,0 +1,36 @@
+
+.search-song {
+  border: none;
+  outline: none;
+  width: calc(100% - 75px) ;
+  height: 50px;
+  padding-left: 20px;
+  color: aliceblue;
+  background-color: transparent;
+  font-size: 18px;
+  box-sizing: border-box;
+  &::-webkit-input-placeholder {
+    color: #fff;
+  }
+  &:-moz-placeholder {
+    color: #fff;
+  }
+}
+.search-btn {
+  font-size: 18px;
+  width: 75px;
+  height: 50px;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  cursor: pointer;
+  > .icon {
+    font-size: 30px;
+    color: #fff;
+  }
+  &:hover {
+    background-color: #42574C;
+  }
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+   <script>
+   	// $.get('https://route.showapi.com/213-2?showapi_appid=34565&showapi_sign=c38a8f85afc24a429be423d2fc465ecc&musicid=657294', function(data) {
+   	// 	let a = data.showapi_res_body.lyric
+	   //  let reg = /&#(\d+);/;
+	   //  let f = str => reg.test(a) ? f(a.replace(reg, String.fromCharCode(Number(RegExp.$1)))): a
+	   //  console.log(f)
+
+	   $.get('http://route.showapi.com/213-1?showapi_appid=43133&showapi_sign=772B161333BF0FAA3AEF9EA437E52C96&keyword=张杰&page=1', function(data) {
+	   	console.log(data)
+	   })
+   </script>
+</body>
+</html>
