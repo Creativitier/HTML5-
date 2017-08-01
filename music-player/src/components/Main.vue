@@ -8,13 +8,13 @@
       <div class="mask"></div>
       <!-- 搜素框 -->
       <div class=search-box>
-        <search-box></search-box>
+        <search-box @songDetail="songData"></search-box>
       </div>
 
       <div class=wrapper-container>
         <!-- 歌曲列表 -->
         <div class=song-list>
-          <song-list></song-list>
+          <song-list :songList="songList"></song-list>
         </div>
         <!-- 歌词展示 -->
         <div class=lyrics>
@@ -40,7 +40,12 @@
   name: 'main',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      songList: []
+    }
+  },
+  methods: {
+    songData(data) {
+      this.songList = data
     }
   },
   components: {

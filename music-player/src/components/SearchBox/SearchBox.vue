@@ -11,7 +11,6 @@
 
 <script>
   import {getMessage} from 'common/getMessage'
-  import {bus} from 'common/bus'
   export default {
     name: 'searchBox',
     data() {
@@ -30,11 +29,8 @@
         if(!this.keyWords) return
         let keyWords = this.keyWords.replace(/\s./, '')
         getMessage(keyWords, this.page).then((response) => {
-          let  _this = this
           this.setInit(response)
-          bus.$emit('songDetail',{
-            songlist: _this.contentlist
-          })
+          this.$emit('songDetail', this.contentlist)
         }).catch((error) => {
           console.log('error:' + error)
         })
@@ -50,6 +46,6 @@
   }
 </script>
 
-<style lang=sass>
+<style lang="sass" >
   @import '../../scss/SearchBox'
 </style>
