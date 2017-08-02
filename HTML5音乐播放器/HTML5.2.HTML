@@ -110,7 +110,6 @@
         now.innerHTML = changeTime(oa.currentTime)
         var scale = oa.currentTime/oa.duration
         div2.style.left = scale * 240 + 'px'
-
     }
     div2.onmousedown =  function (ev) {
         var disX = ev.clientX - div2.offsetLeft
@@ -131,6 +130,17 @@
             this.onmouseup = null
         }
     }
+
+
+
+
+
+
+
+
+
+
+    
     div4.onmousedown =  function (ev) {
             var disX = ev.clientX - div4.offsetLeft
             document.onmousemove = function (ev) {

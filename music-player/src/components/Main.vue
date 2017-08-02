@@ -14,7 +14,7 @@
       <div class=wrapper-container>
         <!-- 歌曲列表 -->
         <div class=song-list>
-          <song-list :songList="songList"></song-list>
+          <song-list :songList="songList" @isNow="isNow" @isShowPic="isShowPic" :arr="arr"></song-list>
         </div>
         <!-- 歌词展示 -->
         <div class=lyrics>
@@ -24,7 +24,7 @@
       </div>
       <!-- 播放器 -->
       <div class=player>
-        <music-play></music-play>
+        <music-play :songList="songList" :iNow="iNow" :isFlag="isFlag" @send="send"></music-play>
       </div>
 
     </div>
@@ -40,12 +40,25 @@
   name: 'main',
   data () {
     return {
-      songList: []
+      songList: [],
+      //当前播放歌曲的索引
+      iNow: -1,
+      isFlag: true,
+      arr: []
     }
   },
   methods: {
     songData(data) {
       this.songList = data
+    },
+    isNow(index) {
+      this.iNow = index
+    },
+    isShowPic(flag) {
+      this.isFlag = flag
+    },
+    send(arr) {
+     this.arr = arr
     }
   },
   components: {

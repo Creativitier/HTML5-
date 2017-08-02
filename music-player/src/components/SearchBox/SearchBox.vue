@@ -23,6 +23,14 @@
          contentlist: []
       }
     },
+    created() {
+      this.$nextTick(() => {
+        getMessage('明明', 1).then((response) => {
+          this.setInit(response)
+          this.$emit('songDetail', this.contentlist)
+        })
+      })
+    },
     methods: {
       //获取数据函数
       searchMessage() {
